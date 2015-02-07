@@ -48,9 +48,14 @@
             android:label="@string/title_activity_get_contacts" >
         </activity>
         <activity
-            android:name=".HomeScreen"
-            android:theme="@style/CustomActionBarTheme2"
-            android:label="@string/title_activity_home_screen" >
+            android:name=".SelectBookingFragment"
+            android:label="@string/title_activity_select_booking_fragment"
+            android:theme="@style/CustomActionBarTheme2" >
+        </activity>
+        <activity
+            android:name=".NavigationDrawer"
+            android:label="@string/title_activity_navigation_drawer"
+            android:theme="@style/CustomActionBarTheme2">
         </activity>
     </application>
 

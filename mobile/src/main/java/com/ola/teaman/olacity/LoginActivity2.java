@@ -130,8 +130,8 @@ public class LoginActivity2 extends PlusBaseActivity implements LoaderCallbacks<
      */
     public void attemptLogin() {
 
-        Intent getContacts = new Intent(this, HomeScreen.class);
-        startActivity(getContacts);
+        Intent d = new Intent(this, NavigationDrawer.class);
+        startActivity(d);
 
         if (mAuthTask != null) {
             return;
