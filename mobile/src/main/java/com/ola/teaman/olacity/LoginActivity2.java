@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -17,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +33,23 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +74,11 @@ public class LoginActivity2 extends PlusBaseActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+
+    String FILENAME = "hello_file";
+    String str = "";
+
+
     private UserLoginTask mAuthTask = null;
 
     // UI references.
@@ -69,6 +93,27 @@ public class LoginActivity2 extends PlusBaseActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent d;
+        FileOutputStream fos = null;
+        FileInputStream fis;
+        d = new Intent(this, NavigationDrawer.class);
+        try {
+            fis = openFileInput(FILENAME);
+            if (fis!= null) {
+
+                startActivity(d);
+                 }
+            fis.close();
+            }
+        catch (FileNotFoundException e)
+        {
+           Log.e("ERROR",e.getMessage());
+        }
+        catch (IOException e)
+        {
+            Log.e("ERROR",e.getMessage());
+        }
         setContentView(R.layout.activity_login_activity2);
 
         // Find the Google+ sign in button.
@@ -89,10 +134,10 @@ public class LoginActivity2 extends PlusBaseActivity implements LoaderCallbacks<
         }
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.phone);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = (EditText) findViewById(R.id.name);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -130,34 +175,104 @@ public class LoginActivity2 extends PlusBaseActivity implements LoaderCallbacks<
      */
     public void attemptLogin() {
 
-        Intent d = new Intent(this, NavigationDrawer.class);
-        startActivity(d);
 
-        if (mAuthTask != null) {
-            return;
+
+        String name = ((TextView) findViewById(R.id.name)).getText().toString();
+        String phone = ((TextView) findViewById(R.id.phone)).getText().toString();
+        Log.d("ROHIT", name + phone);
+        class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
+
+            String resp;
+            @Override
+            protected String doInBackground(String... params) {
+                String name = params[0];
+                String phone = params[1];
+
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://mitrevels.in/app_roll/gcm_server_php/registration.php");
+
+                BasicNameValuePair phoneBNVP = new BasicNameValuePair("phone", phone);
+                BasicNameValuePair nameBNVP = new BasicNameValuePair("name", name);
+                // BasicNameValuePair phoneBNVP = new BasicNameValuePair("phone",phone);
+
+                List<NameValuePair> nvpList = new ArrayList<NameValuePair>();
+                nvpList.add(phoneBNVP);
+                nvpList.add(nameBNVP);
+
+                HttpResponse httpResponse = null;
+                try {
+                    // UrlEncodedFormEntity is an entity composed of a list of url-encoded pairs.
+                    //This is typically useful while sending an HTTP POST request.
+                    UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(nvpList);
+
+                    // setEntity() hands the entity (here it is urlEncodedFormEntity) to the request.
+                    httpPost.setEntity(urlEncodedFormEntity);
+
+                    try {
+                        // HttpResponse is an interface just like HttpPost.
+                        //Therefore we can't initialize them
+                        httpResponse = httpClient.execute(httpPost);
+
+                        // According to the JAVA API, InputStream constructor do nothing.
+                        //So we can't initialize InputStream although it is not an interface
+
+
+
+
+                    } catch (ClientProtocolException cpe) {
+                        System.out.println("Firstption caz of HttpResponese :" + cpe);
+                        cpe.printStackTrace();
+                    } catch (IOException ioe) {
+                        System.out.println("Secondption caz of HttpResponse :" + ioe);
+                        ioe.printStackTrace();
+                    }
+
+                } catch (UnsupportedEncodingException uee) {
+                    System.out.println("Anption given because of UrlEncodedFormEntity argument :" + uee);
+                    uee.printStackTrace();
+                }
+
+
+                return null;
+
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                  }
+
+            
         }
 
-        // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
+        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
+        sendPostReqAsyncTask.execute(name, phone);
 
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
+try {
+                Log.d("ROHIT", " OP file");
+                FileOutputStream fos= openFileOutput(FILENAME, Context.MODE_PRIVATE);
+                fos.write(phone.getBytes());
+                fos.close();
+                Log.d("ROHIT", "Writing file");
+                Intent d = new Intent (this,NavigationDrawer.class);
+                startActivity(d);
+
+            }
+
+            catch (FileNotFoundException e)
+            {
+                Log.e("ERROR",e.getMessage());
+            }
+            catch (IOException e)
+            {
+                Log.e("ERROR",e.getMessage());
+            }
+
+
+
+
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
+   /*     if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
@@ -177,7 +292,7 @@ public class LoginActivity2 extends PlusBaseActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
-        }
+        } */
     }
 
     private boolean isEmailValid(String email) {

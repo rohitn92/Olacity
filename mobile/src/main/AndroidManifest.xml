@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -55,7 +56,11 @@
         <activity
             android:name=".NavigationDrawer"
             android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/CustomActionBarTheme2">
+            android:theme="@style/CustomActionBarTheme2" >
+        </activity>
+        <activity
+            android:name=".fragments.Requests"
+            android:label="@string/title_activity_requests" >
         </activity>
     </application>
 
