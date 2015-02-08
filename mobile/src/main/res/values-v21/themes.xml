@@ -10,7 +10,7 @@
        <item name="android:colorPrimaryDark">#16A085</item>
        <!--   theme UI controls like checkboxes and text fields -->
        <item name="android:colorAccent">@android:color/white</item>
-       <item name = "android:textColorPrimary">#ECF0F1</item>
+       <item name = "android:textColorPrimary">#7F8C8D</item>
        <item name="android:statusBarColor">#16A085</item>
 
     </style>
@@ -36,7 +36,7 @@
         <item name="android:colorPrimaryDark">#16A085</item>
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="android:colorAccent">@android:color/white</item>
-        <item name = "android:textColorPrimary">#ECF0F1</item>
+        <item name = "android:textColorPrimary">#7F8C8D</item>
         <item name="android:statusBarColor">#16A085</item>
 
     </style>

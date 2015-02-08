@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ola.teaman.olacity.LetsRide;
 import com.ola.teaman.olacity.R;
 
 
@@ -97,6 +99,8 @@ public class Requests extends Activity {
             JSONObject json = jParser.getJSONFromUrl(url);
             return json;
         }
+
+
         @Override
         protected void onPostExecute(JSONObject json) {
             pDialog.dismiss();
@@ -160,6 +164,9 @@ public class Requests extends Activity {
                                             Toast.makeText(Requests.this, "You Clicked at yeuyughs "+""+oslist.get(+position).get("device_id"), Toast.LENGTH_SHORT).show();
                                             // if this button is clicked, close
                                             // current activity
+
+
+
 
                                         }
                                     })

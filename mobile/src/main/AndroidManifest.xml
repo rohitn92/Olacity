@@ -14,6 +14,17 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <permission
+        android:name="com.ola.teaman.olacity.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.ola.teaman.olacity.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -38,6 +49,9 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAyzzxZFv0fKpIL2TXI_5jW3N3UuX3R3oA" />
 
         <activity
             android:name=".LoginActivity2"
@@ -61,6 +75,14 @@
         <activity
             android:name=".fragments.Requests"
             android:label="@string/title_activity_requests" >
+        </activity>
+        <activity
+            android:name=".GPSTracker"
+            android:label="@string/title_activity_gpstracker" >
+        </activity>
+        <activity
+            android:name=".LetsRide"
+            android:label="@string/title_activity_lets_ride" >
         </activity>
     </application>
 

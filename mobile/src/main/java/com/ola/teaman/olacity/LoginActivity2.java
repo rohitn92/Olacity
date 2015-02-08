@@ -240,7 +240,7 @@ public class LoginActivity2 extends PlusBaseActivity implements LoaderCallbacks<
             protected void onPostExecute(String result) {
                   }
 
-            
+
         }
 
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();

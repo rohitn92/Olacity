@@ -23,6 +23,7 @@ import android.widget.ListView;
 import com.ola.teaman.olacity.fragments.HomeActivity;
 import com.ola.teaman.olacity.fragments.Requests;
 import com.ola.teaman.olacity.fragments.SelectMeetUpContacts;
+import com.ola.teaman.olacity.fragments.dummy.gogogo;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -40,7 +41,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class NavigationDrawer extends ActionBarActivity implements HomeActivity.OnFragmentInteractionListener, SelectMeetUpContacts.OnFragmentInteractionListener {
+public class NavigationDrawer extends ActionBarActivity implements HomeActivity.OnFragmentInteractionListener, SelectMeetUpContacts.OnFragmentInteractionListener, gogogo.OnFragmentInteractionListener {
 
     // declare properties
     private String[] mNavigationDrawerItemTitles;
@@ -199,10 +200,10 @@ public class NavigationDrawer extends ActionBarActivity implements HomeActivity.
             case 0:
                 fragment = new HomeActivity();
                 break;
-  /*          case 1:
-                fragment = new AccountActivity();
+           case 1:
+                fragment = new gogogo();
                 break;
-            case 2:
+          /*  case 2:
                 fragment = new BookingsActivity();
                 break;
             case 3:
@@ -277,6 +278,9 @@ public class NavigationDrawer extends ActionBarActivity implements HomeActivity.
         Log.d("ROHIT","called");
 
         new RetrieveFeedTask().execute(deviceID,eventID,ID);
+
+        Intent i = new Intent(this, LetsRide.class);
+            startActivity(i);
 
 
     }
