@@ -128,7 +128,7 @@ public class SelectMeetUpContacts extends Fragment implements AbsListView.OnItem
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        items = new String[]{"Vegetables", "Fruits", "Flower Buds", "Legumes", "Bulbs", "Tubers"};
+        items = new String[]{};
 
         // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<String>(getActivity(),

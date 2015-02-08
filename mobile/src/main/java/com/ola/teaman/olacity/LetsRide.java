@@ -93,8 +93,7 @@ public class LetsRide extends FragmentActivity implements onTaskComplete{
         lon = gps.getLongitude();
         Log.e("Lat", lat+"");
         Log.e("Lon", lon+"");
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.the_map))
-                .getMap();
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.the_map)).getMap();
         if(map != null) {
             map.setMyLocationEnabled(true);
             LatLng place = new LatLng(lat, lon);
